@@ -4,12 +4,12 @@
       <h2>项目积分表</h2>
       <el-header>
         <div>
-          项目：<el-input clearable style="width: 330px;" size="mini" @keyup.enter.native="search" v-model="searchParams.label"></el-input>
+          项目：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="searchParams.label"></el-input>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="search">搜索</el-button>
           <el-button type="success" size="mini" icon="el-icon-plus" @click="showAddView()">添加</el-button>
         </div>
       </el-header>
-      <el-main style="padding-left: 0px;padding-top: 30px">
+      <el-main>
         <div>
           <el-table :data="integrals" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'value', order: 'descending'}">
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
