@@ -15,7 +15,7 @@
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
             <el-table-column align="center" width="500px" prop="label" label="项目" sortable="custom"></el-table-column>
             <el-table-column align="center" width="200px" prop="value" label="积分" sortable="custom"></el-table-column>
-            <el-table-column align="center" prop="remark" label="备注"></el-table-column>
+            <el-table-column align="center" width="1000px" prop="remark" label="备注"></el-table-column>
             <el-table-column align="center" width="200" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="showEditView(scope.row)">编辑</el-button>

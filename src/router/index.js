@@ -7,12 +7,17 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'Home',
       component: () => import('@/components/Home')
     },
     {
-      path: '/',
+      path: '/viewemployee',
+      name: 'employee',
+      component: () => import('@/components/Employee')
+    },
+    {
+      path: '/viewintegral',
       name: 'integral',
       component: () => import('@/components/Integral')
     }
