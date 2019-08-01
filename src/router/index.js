@@ -17,6 +17,11 @@ export default new Router({
       component: () => import('@/components/Employee')
     },
     {
+      path: '/viewemployeeintegral',
+      name: 'employeeintegral',
+      component: () => import('@/components/EmployeeIntegral')
+    },
+    {
       path: '/viewintegral',
       name: 'integral',
       component: () => import('@/components/Integral')

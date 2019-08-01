@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import { getRequest, postRequest, putRequest, deleteRequest } from './request/http'
+import { getRequest, postRequest, putRequest, deleteRequest } from './utils/request'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
