@@ -31,7 +31,7 @@
         </div>
       </el-main>
     </el-container>
-    <el-dialog :title="dialogTitle" :close-on-click-modal="false" :visible.sync="dialogVisible" :before-close="cancelEdit" width="50%" center>
+    <!-- <el-dialog :title="dialogTitle" :close-on-click-modal="false" :visible.sync="dialogVisible" :before-close="closeDialog" width="50%" center>
       <el-form :model="integral" ref="saveForm">
         <el-row type="flex">
           <el-col :span="24">
@@ -59,12 +59,18 @@
         <el-button type="primary" size="mini" @click="save('saveForm')">保存</el-button>
         <el-button size="mini" @click="cancelEdit">取消</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
+    <integralEditor :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :integral="integral" v-on:closeDialog="closeDialog"></integralEditor>
   </div>
 </template>
 
 <script>
+import integralEditor from '@/components/IntegralEditor'
+
 export default {
+  components: {
+    integralEditor
+  },
   data () {
     return {
       dialogTitle: '',
@@ -89,7 +95,7 @@ export default {
     }
   },
   methods: {
-    cancelEdit () {
+    closeDialog () {
       this.dialogVisible = false
       this.emptyData()
       this.load()
@@ -123,19 +129,9 @@ export default {
     load () {
       var _this = this
       this.getRequest('/integral', _this.searchParams).then(resp => {
-        this.tableLoading = false
+        _this.tableLoading = false
         _this.total = resp.data.total
         _this.integrals = resp.data.data
-      })
-    },
-    save (formName) {
-      var _this = this
-      _this.tableLoading = true
-      this.putRequest('/integral', _this.integral).then(resp => {
-        _this.tableLoading = false
-        _this.dialogVisible = false
-        _this.emptyData()
-        _this.load()
       })
     },
     search () {
@@ -156,16 +152,15 @@ export default {
       this.getRequest('/integral/' + row.id).then(resp => {
         _this.integral = resp.data.data
       })
-      _this.tableLoading = false
-      _this.dialogTitle = '编辑'
-      _this.dialogVisible = true
+      this.tableLoading = false
+      this.dialogTitle = '编辑'
+      this.dialogVisible = true
     },
     tableSortChange (column) {
-      var _this = this
       if (column.order === 'descending') {
-        _this.searchParams.orderBy = column.prop + ' DESC'
+        this.searchParams.orderBy = column.prop + ' DESC'
       } else {
-        _this.searchParams.orderBy = column.prop + ' ASC'
+        this.searchParams.orderBy = column.prop + ' ASC'
       }
       this.load()
     }
