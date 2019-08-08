@@ -3,7 +3,7 @@
     <el-container style="height: 100%;">
       <el-aside :width="asideWidth">
         <img src="@/assets/logo.png" width="60" height="60">
-        <el-menu router background-color="#000" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" style="text-align: left;">
+        <el-menu router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" style="text-align: left;">
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-document"></i>
@@ -81,6 +81,6 @@ export default {
   line-height: 60px;
 }
 .el-aside {
-  background-color: #000;
+  background-color: #545c64;
 }
 </style>
