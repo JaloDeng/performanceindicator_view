@@ -14,17 +14,38 @@ export default new Router({
     {
       path: '/viewemployee',
       name: 'employee',
-      component: () => import('@/components/Employee')
+      component: () => import('@/components/Home'),
+      children: [
+        {
+          path: '/viewemployee',
+          name: 'employeeChildren',
+          component: () => import('@/components/view/Employee')
+        }
+      ]
     },
     {
       path: '/viewemployeeintegral',
       name: 'employeeintegral',
-      component: () => import('@/components/EmployeeIntegral')
+      component: () => import('@/components/Home'),
+      children: [
+        {
+          path: '/viewemployeeintegral',
+          name: 'employeeChildren',
+          component: () => import('@/components/view/EmployeeIntegral')
+        }
+      ]
     },
     {
       path: '/viewintegral',
       name: 'integral',
-      component: () => import('@/components/Integral')
+      component: () => import('@/components/Home'),
+      children: [
+        {
+          path: '/viewintegral',
+          name: 'employeeChildren',
+          component: () => import('@/components/view/Integral')
+        }
+      ]
     }
   ]
 })

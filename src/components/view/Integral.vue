@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import integralEditor from '@/components/dialog/IntegralEditor'
+import integralEditor from '@/components/form/IntegralEditor'
 
 export default {
   components: {
