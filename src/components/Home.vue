@@ -4,21 +4,16 @@
       <el-aside :width="asideWidth">
         <img src="@/assets/logo.png" width="60" height="60">
         <el-menu router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" style="text-align: left;">
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-document"></i>
-              <span>资料管理</span>
+          <template v-for="route in $router.options.routes">
+            <template v-if="route.children && route.children.length">
+              <template v-for="item in route.children">
+                <el-menu-item :key="route.path + item.path" :index="item.path">
+                  <i :class="item.icon"></i>
+                  <span slot="title">{{ item.name }}</span>
+                </el-menu-item>
+              </template>
             </template>
-            <el-menu-item index="/viewemployee">参与者</el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-star-on"></i>
-              <span>积分管理</span>
-            </template>
-            <el-menu-item index="/viewintegral">项目积分</el-menu-item>
-            <el-menu-item index="/viewemployeeintegral">参与者积分</el-menu-item>
-          </el-submenu>
+          </template>
         </el-menu>
       </el-aside>
       <el-container>

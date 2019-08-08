@@ -18,7 +18,8 @@ export default new Router({
       children: [
         {
           path: '/viewemployee',
-          name: 'employeeChildren',
+          name: '参与者',
+          icon: 'el-icon-user',
           component: () => import('@/components/view/Employee')
         }
       ]
@@ -30,7 +31,8 @@ export default new Router({
       children: [
         {
           path: '/viewemployeeintegral',
-          name: 'employeeChildren',
+          name: '参与者积分',
+          icon: 'el-icon-star-on',
           component: () => import('@/components/view/EmployeeIntegral')
         }
       ]
@@ -42,7 +44,8 @@ export default new Router({
       children: [
         {
           path: '/viewintegral',
-          name: 'employeeChildren',
+          name: '项目积分',
+          icon: 'el-icon-star-on',
           component: () => import('@/components/view/Integral')
         }
       ]
