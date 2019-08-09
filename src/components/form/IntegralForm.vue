@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialogTitle" :close-on-click-modal="false" :visible.sync="dialogVisible" :before-close="closeDialog" width="50%" center>
+  <el-dialog :title="dialogTitle" :close-on-click-modal="false" :visible.sync="dialogVisible" :before-close="colseForm" width="50%" center>
     <el-form :model="integral" ref="saveForm">
       <el-row type="flex">
         <el-col :span="24">
@@ -25,7 +25,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" size="mini" @click="save('saveForm')">保存</el-button>
-      <el-button size="mini" @click="closeDialog">取消</el-button>
+      <el-button size="mini" @click="colseForm">取消</el-button>
     </span>
   </el-dialog>
 </template>
@@ -37,13 +37,13 @@ export default {
     }
   },
   methods: {
-    closeDialog () {
-      this.$emit('closeDialog')
+    colseForm () {
+      this.$emit('colseForm')
     },
     save (formName) {
       var _this = this
       this.putRequest('/integral', _this.integral).then(resp => {
-        this.closeDialog()
+        this.colseForm()
       })
     }
   },

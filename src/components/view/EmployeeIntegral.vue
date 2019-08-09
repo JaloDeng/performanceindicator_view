@@ -38,52 +38,17 @@
         </div>
       </el-main>
     </el-container>
-    <el-dialog :title="dialogTitle" :close-on-click-modal="false" :visible.sync="dialogVisible" :before-close="cancelEdit" width="50%" center>
-      <el-form :model="employeeIntegral" ref="saveForm">
-        <el-row type="flex">
-          <el-col :span="24">
-            <el-form-item label="参与者" label-width="120px">
-              <el-input v-model="employeeIntegral.employeeId" size="mini"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row type="flex">
-          <el-col :span="12">
-            <el-form-item label="项目"  label-width="120px">
-              <el-input v-model="employeeIntegral.integralId" size="mini"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="积分"  label-width="120px">
-              <el-input type="number" v-model="employeeIntegral.integralValue" size="mini" :readonly="true"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row type="flex">
-          <el-col :span="24">
-            <el-form-item label="时间" label-width="120px">
-              <el-date-picker v-model="employeeIntegral.integralTime" type="datetime" size="mini" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row type="flex">
-          <el-col :span="24">
-            <el-form-item label="备注" label-width="120px">
-              <el-input v-model="employeeIntegral.remark" type="textarea" rows="5" size="mini" placeholder="请输入备注"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" size="mini" @click="save('saveForm')">保存</el-button>
-        <el-button size="mini" @click="cancelEdit">取消</el-button>
-      </span>
-    </el-dialog>
+    <employeeIntegralForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :employeeIntegral="employeeIntegral" v-on:colseForm="colseForm"></employeeIntegralForm>
   </div>
 </template>
 
 <script>
+import employeeIntegralForm from '@/components/form/EmployeeIntegralForm'
+
 export default {
+  components: {
+    employeeIntegralForm
+  },
   data () {
     return {
       dialogTitle: '',
@@ -121,7 +86,7 @@ export default {
     }
   },
   methods: {
-    cancelEdit () {
+    colseForm () {
       this.dialogVisible = false
       this.emptyData()
       this.load()
@@ -165,9 +130,10 @@ export default {
       if (selectTime && selectTime.length > 0) {
         this.searchParams.integralStartTime = selectTime[0]
         this.searchParams.integralEndTime = selectTime[1]
+      } else {
+        this.searchParams.integralStartTime = ''
+        this.searchParams.integralEndTime = ''
       }
-      console.log(this.searchParams.integralStartTime)
-      console.log(this.searchParams.integralEndTime)
     },
     load () {
       var _this = this
@@ -176,16 +142,6 @@ export default {
         this.tableLoading = false
         _this.total = resp.data.total
         _this.employeeIntegrals = resp.data.data
-      })
-    },
-    save (formName) {
-      var _this = this
-      _this.tableLoading = true
-      this.putRequest('/employee/integral', _this.employeeIntegral).then(resp => {
-        _this.tableLoading = false
-        _this.dialogVisible = false
-        _this.emptyData()
-        _this.load()
       })
     },
     search () {

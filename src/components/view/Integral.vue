@@ -31,16 +31,16 @@
         </div>
       </el-main>
     </el-container>
-    <integralEditor :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :integral="integral" v-on:closeDialog="closeDialog"></integralEditor>
+    <integralForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :integral="integral" v-on:colseForm="colseForm"></integralForm>
   </div>
 </template>
 
 <script>
-import integralEditor from '@/components/form/IntegralEditor'
+import integralForm from '@/components/form/IntegralForm'
 
 export default {
   components: {
-    integralEditor
+    integralForm
   },
   data () {
     return {
@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    closeDialog () {
+    colseForm () {
       this.dialogVisible = false
       this.emptyData()
       this.load()
