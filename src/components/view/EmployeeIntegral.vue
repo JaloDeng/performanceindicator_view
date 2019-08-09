@@ -16,7 +16,8 @@
       </el-header>
       <el-main>
         <div>
-          <el-table :data="employeeIntegrals" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'integralTime', order: 'descending'}">
+          <el-table :data="employeeIntegrals" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'integralTime', order: 'descending'}"
+            height="600">
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
             <el-table-column align="center" width="200px" prop="integralTime" label="获取时间" sortable="custom"></el-table-column>
             <el-table-column align="center" width="200px" prop="name" label="姓名" sortable="custom"></el-table-column>

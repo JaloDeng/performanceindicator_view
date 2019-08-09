@@ -11,7 +11,7 @@
       </el-header>
       <el-main>
         <div>
-          <el-table :data="integrals" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'value', order: 'descending'}">
+          <el-table :data="integrals" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'value', order: 'descending'}" height="600">
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
             <el-table-column align="center" width="500px" prop="label" label="项目" sortable="custom"></el-table-column>
             <el-table-column align="center" width="200px" prop="value" label="积分" sortable="custom"></el-table-column>

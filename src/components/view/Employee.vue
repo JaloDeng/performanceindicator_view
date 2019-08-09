@@ -17,7 +17,7 @@
       </el-header>
       <el-main>
         <div>
-          <el-table :data="employees" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'name', order: 'descending'}">
+          <el-table :data="employees" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'name', order: 'descending'}" height="600">
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
             <el-table-column align="center" width="100px" prop="status" label="状态" :formatter="formatStatus"></el-table-column>
             <el-table-column align="center" width="200px" prop="name" label="姓名" sortable="custom"></el-table-column>
