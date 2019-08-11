@@ -7,29 +7,55 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'Home',
+      id: 1,
       component: () => import('@/components/Home'),
+      hidden: true,
+      name: '首页',
+      path: '/'
+    },
+    {
+      id: 11,
       children: [
         {
-          path: '/viewemployee',
-          name: '参与者',
+          id: 101,
+          component: () => import('@/components/view/Employee'),
+          hidden: false,
           icon: 'el-icon-user',
-          component: () => import('@/components/view/Employee')
-        },
-        {
-          path: '/viewemployeeintegral',
-          name: '参与者积分',
-          icon: 'el-icon-star-on',
-          component: () => import('@/components/view/EmployeeIntegral')
-        },
-        {
-          path: '/viewintegral',
-          name: '项目积分',
-          icon: 'el-icon-star-on',
-          component: () => import('@/components/view/Integral')
+          name: '参与者',
+          path: '/employee'
         }
-      ]
+      ],
+      component: () => import('@/components/Home'),
+      hidden: false,
+      icon: 'el-icon-document',
+      name: '资料管理',
+      path: '/material'
+    },
+    {
+      id: 12,
+      children: [
+        {
+          id: 102,
+          component: () => import('@/components/view/Integral'),
+          hidden: false,
+          icon: 'el-icon-star-off',
+          name: '项目积分',
+          path: '/integral'
+        },
+        {
+          id: 103,
+          component: () => import('@/components/view/EmployeeIntegral'),
+          hidden: false,
+          icon: 'el-icon-star-off',
+          name: '参与者积分',
+          path: '/employeeintegral'
+        }
+      ],
+      component: () => import('@/components/Home'),
+      hidden: false,
+      icon: 'el-icon-star-on',
+      name: '积分管理',
+      path: '/integral'
     }
   ]
 })
