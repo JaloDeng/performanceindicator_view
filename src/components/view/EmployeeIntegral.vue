@@ -3,11 +3,15 @@
     <el-container>
       <el-header>
         <div>
+          参与者状态：
+          <el-select v-model="searchParams.employeeStatus" @change="search" size="mini" style="width: 100px;">
+            <el-option v-for="item in activeStatuses" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
           参与者：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="integrals"></el-input>
           项目：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="employees"></el-input>
           获取时间：
           <el-date-picker v-model="integralTime" type="datetimerange" range-separator="-" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" size="mini"
-            :start-placeholder="searchParams.integralStartTime" :end-placeholder="searchParams.integralEndTime" @change="integralSearchTimeChange">
+            :start-placeholder="searchParams.integralStartTime" :end-placeholder="searchParams.integralEndTime" @change="integralSearchTimeChange" style="width: 320px">
           </el-date-picker>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="search">搜索</el-button>
           <el-button type="success" size="mini" icon="el-icon-plus" @click="showAddView()">添加</el-button>
@@ -51,6 +55,7 @@ export default {
   },
   data () {
     return {
+      activeStatuses: [],
       dialogTitle: '',
       dialogVisible: false,
       employees: '',
@@ -73,6 +78,7 @@ export default {
       integralTime: [],
       searchParams: {
         employeeIds: [],
+        employeeStatus: '',
         integralIds: [],
         integralEndTime: '',
         integralStartTime: '',
@@ -125,6 +131,15 @@ export default {
         label: ''
       }
     },
+    getActiveStatus () {
+      var _this = this
+      this.getRequest('/enum/active').then(resp => {
+        if (resp.data && resp.data.data) {
+          _this.activeStatuses.push({label: '全部', value: ''})
+          _this.activeStatuses = _this.activeStatuses.concat(resp.data.data)
+        }
+      })
+    },
     integralSearchTimeChange () {
       var selectTime = this.integralTime
       if (selectTime && selectTime.length > 0) {
@@ -176,6 +191,7 @@ export default {
     }
   },
   mounted () {
+    this.getActiveStatus()
   }
 }
 </script>
