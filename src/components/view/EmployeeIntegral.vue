@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-container>
-      <h2>积分记录表</h2>
       <el-header>
         <div>
           参与者：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="integrals"></el-input>
@@ -177,7 +176,6 @@ export default {
     }
   },
   mounted () {
-    this.load()
   }
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-container>
-      <h2>参与者表</h2>
       <el-header>
         <div>
           状态:
@@ -182,7 +181,6 @@ export default {
   },
   mounted () {
     this.getActiveStatus()
-    this.load()
   }
 }
 </script>

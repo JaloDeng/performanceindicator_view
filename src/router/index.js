@@ -10,7 +10,7 @@ export default new Router({
       id: 1,
       component: () => import('@/components/Home'),
       hidden: true,
-      name: '首页',
+      name: '主页',
       path: '/'
     },
     {

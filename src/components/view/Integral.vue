@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-container>
-      <h2>项目积分表</h2>
       <el-header>
         <div>
           项目：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="searchParams.label"></el-input>
@@ -137,7 +136,6 @@ export default {
     }
   },
   mounted () {
-    this.load()
   }
 }
 </script>

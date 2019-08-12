@@ -7,7 +7,7 @@
           <headerMenu :collapseIcon="collapseIcon" v-on:changeCollapse="changeCollapse"></headerMenu>
         </el-header>
         <el-main>
-          <router-view/>
+          <tabsMenu></tabsMenu>
         </el-main>
       </el-container>
     </el-container>
@@ -15,13 +15,15 @@
 </template>
 
 <script>
-import headerMenu from '@/components/common/horizontalMenu'
-import asideMenu from '@/components/common/verticalMenu'
+import headerMenu from '@/components/common/HorizontalMenu'
+import asideMenu from '@/components/common/VerticalMenu'
+import tabsMenu from '@/components/common/TabsMenu'
 
 export default {
   components: {
     asideMenu,
-    headerMenu
+    headerMenu,
+    tabsMenu
   },
   data () {
     return {
