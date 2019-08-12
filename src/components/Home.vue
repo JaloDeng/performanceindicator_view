@@ -50,6 +50,7 @@ export default {
 <style>
 .el-main {
   background-color: #f5f7f9;
+  padding-top: 0;
 }
 .el-header {
   line-height: 60px;

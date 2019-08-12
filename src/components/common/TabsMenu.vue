@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeIndex" type="border-card" closable v-if="openTabs.length" @tab-click="tabClick" @tab-remove="tabRemove">
+  <el-tabs v-model="activeIndex" type="card" closable v-if="openTabs.length" @tab-click="tabClick" @tab-remove="tabRemove">
     <el-tab-pane :key="item.name" v-for="item in openTabs" :label="item.name" :name="item.path">
       <router-view/>
     </el-tab-pane>
