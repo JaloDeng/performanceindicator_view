@@ -7,8 +7,8 @@
           <el-select v-model="searchParams.employeeStatus" @change="search" size="mini" style="width: 100px;">
             <el-option v-for="item in activeStatuses" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
-          参与者：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="integrals"></el-input>
-          项目：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="employees"></el-input>
+          参与者：<employeeSelect v-model="searchParams.employeeIds"></employeeSelect>
+          项目：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="searchParams.employeeStatus"></el-input>
           获取时间：
           <el-date-picker v-model="integralTime" type="datetimerange" range-separator="-" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" size="mini"
             :start-placeholder="searchParams.integralStartTime" :end-placeholder="searchParams.integralEndTime" @change="integralSearchTimeChange" style="width: 320px">
@@ -48,17 +48,18 @@
 
 <script>
 import employeeIntegralForm from '@/components/form/EmployeeIntegralForm'
+import employeeSelect from '@/components/select/EmployeeSelect'
 
 export default {
   components: {
-    employeeIntegralForm
+    employeeIntegralForm,
+    employeeSelect
   },
   data () {
     return {
       activeStatuses: [],
       dialogTitle: '',
       dialogVisible: false,
-      employees: '',
       employeeIntegral: {
         id: '',
         employeeId: '',
@@ -74,6 +75,7 @@ export default {
         label: ''
       },
       employeeIntegrals: [],
+      employeeOptions: [],
       integrals: '',
       integralTime: [],
       searchParams: {
@@ -153,7 +155,8 @@ export default {
     load () {
       var _this = this
       this.tableLoading = true
-      this.getRequest('/employee/integral', _this.searchParams).then(resp => {
+      console.log(_this.searchParams.employeeIds)
+      this.postRequest('/employee/integral', _this.searchParams).then(resp => {
         this.tableLoading = false
         _this.total = resp.data.total
         _this.employeeIntegrals = resp.data.data
