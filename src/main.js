@@ -15,6 +15,11 @@ Vue.prototype.postRequest = postRequest
 Vue.prototype.deleteRequest = deleteRequest
 Vue.prototype.putRequest = putRequest
 
+router.beforeEach((to, from, next) => {
+  store.state.indexPaths = to.matched
+  next()
+})
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

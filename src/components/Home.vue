@@ -1,13 +1,13 @@
 <template>
   <div style="height: 100%;">
     <el-container style="height: 100%;">
-      <asideMenu :asideWidth="asideWidth" :isCollapse="isCollapse"></asideMenu>
+      <verticalNav :asideWidth="asideWidth" :isCollapse="isCollapse"></verticalNav>
       <el-container>
         <el-header>
-          <headerMenu :collapseIcon="collapseIcon" v-on:changeCollapse="changeCollapse"></headerMenu>
+          <horizontalNav :collapseIcon="collapseIcon" v-on:changeCollapse="changeCollapse"></horizontalNav>
         </el-header>
         <el-main>
-          <tabsMenu></tabsMenu>
+          <router-view />
         </el-main>
       </el-container>
     </el-container>
@@ -15,15 +15,13 @@
 </template>
 
 <script>
-import headerMenu from '@/components/common/HorizontalMenu'
-import asideMenu from '@/components/common/VerticalMenu'
-import tabsMenu from '@/components/common/TabsMenu'
+import horizontalNav from '@/components/navigation/HorizontalNav'
+import verticalNav from '@/components/navigation/VerticalNav'
 
 export default {
   components: {
-    asideMenu,
-    headerMenu,
-    tabsMenu
+    horizontalNav,
+    verticalNav
   },
   data () {
     return {
@@ -50,9 +48,8 @@ export default {
 <style>
 .el-main {
   background-color: #f5f7f9;
-  padding-top: 0;
 }
 .el-header {
-  line-height: 60px;
+  padding: 0px;
 }
 </style>
