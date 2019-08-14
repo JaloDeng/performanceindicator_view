@@ -5,10 +5,16 @@
         <div>
           参与者状态：
           <el-select v-model="searchParams.employeeStatus" @change="search" size="mini" style="width: 100px;">
-            <el-option v-for="item in activeStatuses" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            <el-option v-for="item in employeeStatusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
-          参与者：<employeeSelect v-model="searchParams.employeeIds"></employeeSelect>
-          项目：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="searchParams.employeeStatus"></el-input>
+          参与者：
+          <el-select v-model="searchParams.employeeIds" multiple collapse-tags @change="search" size="mini">
+            <el-option v-for="item in employeeOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+          项目：
+          <el-select v-model="searchParams.integralIds" multiple collapse-tags @change="search" size="mini">
+            <el-option v-for="item in integralOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
           获取时间：
           <el-date-picker v-model="integralTime" type="datetimerange" range-separator="-" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" size="mini"
             :start-placeholder="searchParams.integralStartTime" :end-placeholder="searchParams.integralEndTime" @change="integralSearchTimeChange" style="width: 320px">
@@ -42,22 +48,21 @@
         </div>
       </el-main>
     </el-container>
-    <employeeIntegralForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :employeeIntegral="employeeIntegral" v-on:colseForm="colseForm"></employeeIntegralForm>
+    <employeeIntegralForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :employeeIntegral="employeeIntegral" v-on:colseForm="colseForm"
+      :employeeOptions="employeeOptions" :integralOptions="integralOptions" :integrals="integrals"></employeeIntegralForm>
   </div>
 </template>
 
 <script>
 import employeeIntegralForm from '@/components/form/EmployeeIntegralForm'
-import employeeSelect from '@/components/select/EmployeeSelect'
 
 export default {
   components: {
-    employeeIntegralForm,
-    employeeSelect
+    employeeIntegralForm
   },
   data () {
     return {
-      activeStatuses: [],
+      employeeStatusOptions: [{label: '全部', value: ''}],
       dialogTitle: '',
       dialogVisible: false,
       employeeIntegral: {
@@ -74,9 +79,11 @@ export default {
         name: '',
         label: ''
       },
+      employees: [],
       employeeIntegrals: [],
       employeeOptions: [],
-      integrals: '',
+      integrals: [],
+      integralOptions: [],
       integralTime: [],
       searchParams: {
         employeeIds: [],
@@ -133,12 +140,29 @@ export default {
         label: ''
       }
     },
-    getActiveStatus () {
+    getSelectOptions () {
       var _this = this
       this.getRequest('/enum/active').then(resp => {
         if (resp.data && resp.data.data) {
-          _this.activeStatuses.push({label: '全部', value: ''})
-          _this.activeStatuses = _this.activeStatuses.concat(resp.data.data)
+          _this.employeeStatusOptions = _this.employeeStatusOptions.concat(resp.data.data)
+        }
+      })
+      this.getRequest('/integral').then(resp => {
+        if (resp.data && resp.data.data) {
+          _this.integrals = resp.data.data
+          for (let i = 0; i < _this.integrals.length; i++) {
+            const item = _this.integrals[i]
+            _this.integralOptions.push({label: item.label, value: item.id})
+          }
+        }
+      })
+      this.getRequest('/employee').then(resp => {
+        if (resp.data && resp.data.data) {
+          _this.employees = resp.data.data
+          for (let i = 0; i < _this.employees.length; i++) {
+            const item = _this.employees[i]
+            _this.employeeOptions.push({label: item.name, value: item.id})
+          }
         }
       })
     },
@@ -155,7 +179,6 @@ export default {
     load () {
       var _this = this
       this.tableLoading = true
-      console.log(_this.searchParams.employeeIds)
       this.postRequest('/employee/integral', _this.searchParams).then(resp => {
         this.tableLoading = false
         _this.total = resp.data.total
@@ -194,7 +217,7 @@ export default {
     }
   },
   mounted () {
-    this.getActiveStatus()
+    this.getSelectOptions()
   }
 }
 </script>

@@ -3,18 +3,24 @@
     <el-form :model="employeeIntegral" ref="saveForm">
       <el-row type="flex">
         <el-col :span="24">
-          <el-form-item label="参与者" label-width="120px">
-            <el-input v-model="employeeIntegral.employeeId" size="mini"></el-input>
+          <el-form-item label="参与者"  label-width="120px">
+            <el-select v-model="employeeIntegral.employeeId" size="mini">
+              <el-option v-for="item in employeeOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row type="flex">
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item label="项目"  label-width="120px">
-            <el-input v-model="employeeIntegral.integralId" size="mini"></el-input>
+            <el-select v-model="employeeIntegral.integralId" @change="changeIntegralOption" size="mini">
+              <el-option v-for="item in integralOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+      </el-row>
+      <el-row type="flex">
+        <el-col :span="24">
           <el-form-item label="积分"  label-width="120px">
             <el-input type="number" v-model="employeeIntegral.integralValue" size="mini" :readonly="true"></el-input>
           </el-form-item>
@@ -44,10 +50,16 @@
 
 <script>
 export default {
-  data () {
-    return {}
-  },
   methods: {
+    changeIntegralOption (val) {
+      for (let i = 0; i < this.integrals.length; i++) {
+        const item = this.integrals[i]
+        if (item.id === val) {
+          this.employeeIntegral.integralValue = item.value
+          break
+        }
+      }
+    },
     colseForm () {
       this.$emit('colseForm')
     },
@@ -61,7 +73,10 @@ export default {
   props: {
     dialogTitle: String,
     dialogVisible: Boolean,
-    employeeIntegral: Object
+    employeeOptions: Array,
+    employeeIntegral: Object,
+    integrals: Array,
+    integralOptions: Array
   }
 }
 </script>
