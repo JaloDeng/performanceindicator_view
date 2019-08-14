@@ -4,7 +4,7 @@
       <el-header>
         <div>
           参与者状态：
-          <el-select v-model="searchParams.employeeStatus" @change="search" size="mini" style="width: 100px;">
+          <el-select v-model="searchParams.employeeStatus" @change="changeEmployeeStatusOption" size="mini" style="width: 100px;">
             <el-option v-for="item in employeeStatusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
           参与者：
@@ -48,8 +48,8 @@
         </div>
       </el-main>
     </el-container>
-    <employeeIntegralForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :employeeIntegral="employeeIntegral" v-on:colseForm="colseForm"
-      :employeeOptions="employeeOptions" :integralOptions="integralOptions" :integrals="integrals"></employeeIntegralForm>
+    <employeeIntegralForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" v-on:colseForm="colseForm" :employeeIntegral="employeeIntegral"
+      :integralOptions="integralOptions" :integrals="integrals"></employeeIntegralForm>
   </div>
 </template>
 
@@ -101,6 +101,11 @@ export default {
     }
   },
   methods: {
+    changeEmployeeStatusOption () {
+      this.employeeOptions = []
+      this.getEmployeeOptions()
+      this.load()
+    },
     colseForm () {
       this.dialogVisible = false
       this.emptyData()
@@ -140,28 +145,34 @@ export default {
         label: ''
       }
     },
-    getSelectOptions () {
+    getEmployeeOptions () {
+      var _this = this
+      this.getRequest('/employee', {status: _this.searchParams.employeeStatus}).then(resp => {
+        if (resp.data && resp.data.data) {
+          _this.employees = resp.data.data
+          for (let i = 0; i < _this.employees.length; i++) {
+            const item = _this.employees[i]
+            _this.employeeOptions.push({label: item.name, value: item.id})
+          }
+        }
+      })
+    },
+    getEmployeeStatusOptions () {
       var _this = this
       this.getRequest('/enum/active').then(resp => {
         if (resp.data && resp.data.data) {
           _this.employeeStatusOptions = _this.employeeStatusOptions.concat(resp.data.data)
         }
       })
+    },
+    getIntegralOptions () {
+      var _this = this
       this.getRequest('/integral').then(resp => {
         if (resp.data && resp.data.data) {
           _this.integrals = resp.data.data
           for (let i = 0; i < _this.integrals.length; i++) {
             const item = _this.integrals[i]
             _this.integralOptions.push({label: item.label, value: item.id})
-          }
-        }
-      })
-      this.getRequest('/employee').then(resp => {
-        if (resp.data && resp.data.data) {
-          _this.employees = resp.data.data
-          for (let i = 0; i < _this.employees.length; i++) {
-            const item = _this.employees[i]
-            _this.employeeOptions.push({label: item.name, value: item.id})
           }
         }
       })
@@ -175,6 +186,7 @@ export default {
         this.searchParams.integralStartTime = ''
         this.searchParams.integralEndTime = ''
       }
+      this.load()
     },
     load () {
       var _this = this
@@ -217,7 +229,9 @@ export default {
     }
   },
   mounted () {
-    this.getSelectOptions()
+    this.getEmployeeOptions()
+    this.getEmployeeStatusOptions()
+    this.getIntegralOptions()
   }
 }
 </script>

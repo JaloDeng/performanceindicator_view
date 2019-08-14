@@ -22,14 +22,14 @@
       <el-row type="flex">
         <el-col :span="24">
           <el-form-item label="积分"  label-width="120px">
-            <el-input type="number" v-model="employeeIntegral.integralValue" size="mini" :readonly="true"></el-input>
+            <el-input type="number" v-model="employeeIntegral.integralValue" size="mini" :readonly="true" style="width: 200px;"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row type="flex">
         <el-col :span="24">
           <el-form-item label="时间" label-width="120px">
-            <el-date-picker v-model="employeeIntegral.integralTime" type="datetime" size="mini" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+            <el-date-picker v-model="employeeIntegral.integralTime" type="datetime" size="mini" value-format="yyyy-MM-dd HH:mm:ss" style="width: 200px;"></el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -50,6 +50,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      employeeOptions: []
+    }
+  },
   methods: {
     changeIntegralOption (val) {
       for (let i = 0; i < this.integrals.length; i++) {
@@ -63,6 +68,18 @@ export default {
     colseForm () {
       this.$emit('colseForm')
     },
+    getEmployeeOptions () {
+      var _this = this
+      this.getRequest('/employee').then(resp => {
+        if (resp.data && resp.data.data) {
+          var datas = resp.data.data
+          for (let i = 0; i < datas.length; i++) {
+            const item = datas[i]
+            _this.employeeOptions.push({label: item.name, value: item.id})
+          }
+        }
+      })
+    },
     save (formName) {
       var _this = this
       this.putRequest('/employee/integral', _this.employeeIntegral).then(resp => {
@@ -70,10 +87,12 @@ export default {
       })
     }
   },
+  mounted () {
+    this.getEmployeeOptions()
+  },
   props: {
     dialogTitle: String,
     dialogVisible: Boolean,
-    employeeOptions: Array,
     employeeIntegral: Object,
     integrals: Array,
     integralOptions: Array
@@ -82,4 +101,7 @@ export default {
 </script>
 
 <style>
+.el-select {
+  width: 200px;
+}
 </style>
