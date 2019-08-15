@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-container>
-      <el-header>
-        <div>
+      <el-main style="padding: 0px;">
+        <template>
           状态:
           <el-select v-model="searchParams.status" @change="search" size="mini" style="width: 100px;">
             <el-option v-for="item in activeStatuses" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -12,10 +12,9 @@
           电子邮箱：<el-input clearable style="width: 200px;" size="mini" @keyup.enter.native="search" v-model="searchParams.email"></el-input>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="search">搜索</el-button>
           <el-button type="success" size="mini" icon="el-icon-plus" @click="showAddView()">添加</el-button>
-        </div>
-      </el-header>
-      <el-main>
-        <div>
+        </template>
+        <br style="line-height: 40px;">
+        <template>
           <el-table :data="employees" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'name', order: 'descending'}" height="600">
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
             <el-table-column align="center" width="100px" prop="status" label="状态" :formatter="formatStatus"></el-table-column>
@@ -36,7 +35,7 @@
             <el-pagination background :page-sizes="sizes" :page-size="searchParams.pageSize" @size-change="sizeChange" :current-page="searchParams.pageNum"
               @current-change="currentChange" layout="sizes, prev, pager, next, jumper, ->, total" :total="total" style="text-align:center"></el-pagination>
           </div>
-        </div>
+        </template>
       </el-main>
     </el-container>
     <employeeForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" :employee="employee" v-on:colseForm="colseForm"></employeeForm>

@@ -1,10 +1,10 @@
 <template>
   <div style="height: 100%;">
     <el-container style="height: 100%;">
-      <verticalNav :asideWidth="asideWidth" :isCollapse="isCollapse"></verticalNav>
+      <verticalNav :asideWidth="asideWidth" :isCollapse="isCollapse" v-on:changeCollapse="changeCollapse"></verticalNav>
       <el-container>
         <el-header>
-          <horizontalNav :collapseIcon="collapseIcon" v-on:changeCollapse="changeCollapse"></horizontalNav>
+          <horizontalNav></horizontalNav>
         </el-header>
         <el-main>
           <router-view />
@@ -25,19 +25,16 @@ export default {
   },
   data () {
     return {
-      asideWidth: '250px',
-      collapseIcon: 'el-icon-s-fold',
-      isCollapse: false
+      asideWidth: '65px',
+      isCollapse: true
     }
   },
   methods: {
     changeCollapse () {
       this.isCollapse = !this.isCollapse
       if (this.isCollapse) {
-        this.collapseIcon = 'el-icon-s-unfold'
-        this.asideWidth = '0px'
+        this.asideWidth = '65px'
       } else {
-        this.collapseIcon = 'el-icon-s-fold'
         this.asideWidth = '250px'
       }
     }

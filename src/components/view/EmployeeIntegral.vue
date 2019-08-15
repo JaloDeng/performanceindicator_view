@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-container>
-      <el-header>
-        <div>
+      <el-main style="padding: 0px;">
+        <template>
           参与者状态：
           <el-select v-model="searchParams.employeeStatus" @change="changeEmployeeStatusOption" size="mini" style="width: 100px;">
             <el-option v-for="item in employeeStatusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -21,10 +21,9 @@
           </el-date-picker>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="search">搜索</el-button>
           <el-button type="success" size="mini" icon="el-icon-plus" @click="showAddView()">添加</el-button>
-        </div>
-      </el-header>
-      <el-main>
-        <div>
+        </template>
+        <br style="line-height: 40px;">
+        <template>
           <el-table :data="employeeIntegrals" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'integralTime', order: 'descending'}"
             height="600">
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
@@ -45,7 +44,7 @@
             <el-pagination background :page-sizes="sizes" :page-size="searchParams.pageSize" @size-change="sizeChange" :current-page="searchParams.pageNum"
               @current-change="currentChange" layout="sizes, prev, pager, next, jumper, ->, total" :total="total" style="text-align:center"></el-pagination>
           </div>
-        </div>
+        </template>
       </el-main>
     </el-container>
     <employeeIntegralForm :dialogTitle="dialogTitle" :dialogVisible="dialogVisible" v-on:colseForm="colseForm" :employeeIntegral="employeeIntegral"
