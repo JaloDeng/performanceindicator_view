@@ -56,6 +56,24 @@ export default new Router({
       icon: 'el-icon-star-on',
       name: '积分管理',
       path: '/integral'
+    },
+    {
+      id: 13,
+      children: [
+        {
+          id: 201,
+          component: () => import('@/components/view/EmployeeIntegralStatistics'),
+          hidden: false,
+          icon: 'el-icon-data-analysis',
+          name: '积分统计',
+          path: '/employeeintegralstatistics'
+        }
+      ],
+      component: () => import('@/components/Home'),
+      hidden: false,
+      icon: 'el-icon-s-data',
+      name: '数据统计',
+      path: '/statistics'
     }
   ]
 })
