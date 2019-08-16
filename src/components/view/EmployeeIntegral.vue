@@ -55,7 +55,6 @@
 
 <script>
 import employeeIntegralForm from '@/components/form/EmployeeIntegralForm'
-import axios from 'axios'
 
 export default {
   components: {
@@ -147,32 +146,10 @@ export default {
       }
     },
     exportExcel () {
-      // var _this = this
+      var _this = this
       var url = '/employee/integral/export/excel'
-      url = 'http://localhost:8085/employee/integral/export/excel'
-      // this.exportExcelRequest(url, _this.searchParams).then(res => {
-      //   var blob = new Blob([res], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
-      //   var downloadElement = document.createElement('a')
-      //   downloadElement.download = 'pi.xlsx'
-      //   downloadElement.style.display = 'none'
-      //   downloadElement.href = window.URL.createObjectURL(blob)
-      //   document.body.appendChild(downloadElement)
-      //   downloadElement.click()
-      //   window.URL.revokeObjectURL(downloadElement.href)
-      //   document.body.removeChild(downloadElement)
-      // }).catch(err => {
-      //   _this.$message.error(err.message)
-      // })
-      axios.post(url, {},
-        {responseType: 'blob'}).then(res => {
-        // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
-        const blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
-        const downloadElement = document.createElement('a')
-        const href = window.URL.createObjectURL(blob)
-        downloadElement.href = href
-        downloadElement.download = 'xxx.xlsx'
-        downloadElement.click()
-      })
+      // url = 'http://localhost:8085/employee/integral/export/excel'
+      this.exportExcelRequest(url, _this.searchParams, 'pi')
     },
     getEmployeeOptions () {
       var _this = this

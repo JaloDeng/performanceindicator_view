@@ -32,12 +32,14 @@ axios.interceptors.response.use(response => {
   }
   return response
 }, error => {
-  if (error.response.status === 504) {
-    Message.error({message: '服务器异常'})
-  } else if (error.response.status === 404) {
-    Message.error({message: '请求不存在'})
-  } else if (error.response.status === 403) {
-    Message.error({message: '权限不足,请联系管理员!'})
+  if (error && error.response && error.response.status) {
+    if (error.response.status === 504) {
+      Message.error({message: '服务器异常'})
+    } else if (error.response.status === 404) {
+      Message.error({message: '请求不存在'})
+    } else if (error.response.status === 403) {
+      Message.error({message: '权限不足,请联系管理员!'})
+    }
   } else {
     Message.error({message: '未知错误!'})
   }
@@ -77,5 +79,16 @@ export const deleteRequest = (url) => {
   return axios({
     method: 'delete',
     url: `${baseURL}${url}`
+  })
+}
+
+export const exportExcelRequest = (url, params, filename) => {
+  axios.post(url, params, {responseType: 'blob'}).then(res => {
+    const blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
+    const downloadElement = document.createElement('downLoadExcel')
+    downloadElement.href = window.URL.createObjectURL(blob)
+    downloadElement.download = filename + '.xlsx'
+    downloadElement.click()
+    window.URL.revokeObjectURL(downloadElement.href)
   })
 }
