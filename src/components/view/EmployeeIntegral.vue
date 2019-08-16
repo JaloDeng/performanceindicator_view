@@ -20,6 +20,7 @@
             :start-placeholder="searchParams.integralStartTime" :end-placeholder="searchParams.integralEndTime" @change="integralSearchTimeChange" style="width: 320px">
           </el-date-picker>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="search">搜索</el-button>
+          <el-button type="warning" size="mini" icon="el-icon-download" @click="exportExcel">导出</el-button>
           <el-button type="success" size="mini" icon="el-icon-plus" @click="showAddView()">添加</el-button>
         </template>
         <br style="line-height: 40px;">
@@ -54,6 +55,7 @@
 
 <script>
 import employeeIntegralForm from '@/components/form/EmployeeIntegralForm'
+import axios from 'axios'
 
 export default {
   components: {
@@ -143,6 +145,34 @@ export default {
         name: '',
         label: ''
       }
+    },
+    exportExcel () {
+      // var _this = this
+      var url = '/employee/integral/export/excel'
+      url = 'http://localhost:8085/employee/integral/export/excel'
+      // this.exportExcelRequest(url, _this.searchParams).then(res => {
+      //   var blob = new Blob([res], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
+      //   var downloadElement = document.createElement('a')
+      //   downloadElement.download = 'pi.xlsx'
+      //   downloadElement.style.display = 'none'
+      //   downloadElement.href = window.URL.createObjectURL(blob)
+      //   document.body.appendChild(downloadElement)
+      //   downloadElement.click()
+      //   window.URL.revokeObjectURL(downloadElement.href)
+      //   document.body.removeChild(downloadElement)
+      // }).catch(err => {
+      //   _this.$message.error(err.message)
+      // })
+      axios.post(url, {},
+        {responseType: 'blob'}).then(res => {
+        // application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
+        const blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
+        const downloadElement = document.createElement('a')
+        const href = window.URL.createObjectURL(blob)
+        downloadElement.href = href
+        downloadElement.download = 'xxx.xlsx'
+        downloadElement.click()
+      })
     },
     getEmployeeOptions () {
       var _this = this
