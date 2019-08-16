@@ -85,7 +85,7 @@ export const deleteRequest = (url) => {
 export const exportExcelRequest = (url, params, filename) => {
   axios.post(url, params, {responseType: 'blob'}).then(res => {
     const blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
-    const downloadElement = document.createElement('downLoadExcel')
+    const downloadElement = document.createElement('a')
     downloadElement.href = window.URL.createObjectURL(blob)
     downloadElement.download = filename + '.xlsx'
     downloadElement.click()

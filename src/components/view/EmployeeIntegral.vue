@@ -146,10 +146,7 @@ export default {
       }
     },
     exportExcel () {
-      var _this = this
-      var url = '/employee/integral/export/excel'
-      // url = 'http://localhost:8085/employee/integral/export/excel'
-      this.exportExcelRequest(url, _this.searchParams, 'pi')
+      this.exportExcelRequest('/employee/integral/export/excel', this.searchParams, '积分统计')
     },
     getEmployeeOptions () {
       var _this = this
