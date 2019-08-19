@@ -32,6 +32,7 @@
             <el-table-column align="center" width="200px" prop="name" label="姓名" sortable="custom"></el-table-column>
             <el-table-column align="center" width="200px" prop="label" label="项目" sortable="custom"></el-table-column>
             <el-table-column align="center" width="200px" prop="integralValue" label="积分" sortable="custom"></el-table-column>
+            <el-table-column align="center" width="200px" prop="integralReduceValue" label="减分" sortable="custom"></el-table-column>
             <el-table-column align="center" width="800px" prop="remark" label="备注"></el-table-column>
             <el-table-column align="center" width="200" label="操作" fixed="right">
               <template slot-scope="scope">
@@ -71,6 +72,7 @@ export default {
         integralId: '',
         integralTime: '',
         integralValue: '',
+        integralReduceValue: '',
         remark: '',
         createUser: '',
         createTime: '',
@@ -136,6 +138,7 @@ export default {
         integralId: '',
         integralTime: '',
         integralValue: '',
+        integralReduceValue: '',
         remark: '',
         createUser: '',
         createTime: '',

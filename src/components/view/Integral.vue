@@ -11,9 +11,10 @@
         <template>
           <el-table :data="integrals" v-loading="tableLoading" size="mini" border @sort-change="tableSortChange" :default-sort="{prop: 'value', order: 'descending'}" height="600">
             <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
-            <el-table-column align="center" width="500px" prop="label" label="项目" sortable="custom"></el-table-column>
+            <el-table-column align="center" width="400px" prop="label" label="项目" sortable="custom"></el-table-column>
             <el-table-column align="center" width="200px" prop="value" label="积分" sortable="custom"></el-table-column>
-            <el-table-column align="center" width="1000px" prop="remark" label="备注"></el-table-column>
+            <el-table-column align="center" width="200px" prop="reduceValue" label="减分" sortable="custom"></el-table-column>
+            <el-table-column align="center" width="800px" prop="remark" label="备注"></el-table-column>
             <el-table-column align="center" width="200" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="showEditView(scope.row)">编辑</el-button>
@@ -48,6 +49,7 @@ export default {
         id: '',
         label: '',
         value: '',
+        reduceValue: '',
         remark: ''
       },
       integrals: [],
@@ -92,6 +94,7 @@ export default {
         id: '',
         label: '',
         value: '',
+        reduceValue: '',
         remark: ''
       }
     },

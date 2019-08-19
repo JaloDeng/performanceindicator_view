@@ -28,6 +28,13 @@
       </el-row>
       <el-row type="flex">
         <el-col :span="24">
+          <el-form-item label="减分"  label-width="120px">
+            <el-input type="number" v-model="employeeIntegral.integralReduceValue" size="mini" :readonly="true" style="width: 200px;"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row type="flex">
+        <el-col :span="24">
           <el-form-item label="时间" label-width="120px">
             <el-date-picker v-model="employeeIntegral.integralTime" type="datetime" size="mini" value-format="yyyy-MM-dd HH:mm:ss" style="width: 200px;"></el-date-picker>
           </el-form-item>
@@ -61,6 +68,7 @@ export default {
         const item = this.integrals[i]
         if (item.id === val) {
           this.employeeIntegral.integralValue = item.value
+          this.employeeIntegral.integralReduceValue = item.reduceValue
           break
         }
       }

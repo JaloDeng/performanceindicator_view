@@ -11,7 +11,14 @@
       <el-row type="flex">
         <el-col :span="24">
           <el-form-item label="积分"  label-width="120px">
-            <el-input type="number" v-model="integral.value" size="mini" placeholder="请输入积分"></el-input>
+            <el-input type="number" v-model="integral.value" size="mini" placeholder="请输入积分值"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row type="flex">
+        <el-col :span="24">
+          <el-form-item label="减分"  label-width="120px">
+            <el-input type="number" v-model="integral.reduceValue" size="mini" placeholder="请输入减分值"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
