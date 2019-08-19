@@ -170,7 +170,7 @@ export default {
     },
     getIntegralOptions () {
       var _this = this
-      this.getRequest('/integral').then(resp => {
+      this.postRequest('/integral', {}).then(resp => {
         if (resp.data && resp.data.data) {
           _this.integrals = resp.data.data
           for (let i = 0; i < _this.integrals.length; i++) {

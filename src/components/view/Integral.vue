@@ -97,7 +97,7 @@ export default {
     },
     load () {
       var _this = this
-      this.getRequest('/integral', _this.searchParams).then(resp => {
+      this.postRequest('/integral', _this.searchParams).then(resp => {
         _this.tableLoading = false
         _this.total = resp.data.total
         _this.integrals = resp.data.data

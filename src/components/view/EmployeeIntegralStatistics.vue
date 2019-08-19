@@ -2,6 +2,18 @@
   <el-container>
     <el-main>
       <template>
+        参与者状态：
+        <el-select v-model="searchParams.employeeStatus" @change="changeEmployeeStatusOption" size="mini" style="width: 100px;">
+          <el-option v-for="item in employeeStatusOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+        参与者：
+        <el-select v-model="searchParams.employeeIds" multiple collapse-tags @change="search" size="mini">
+          <el-option v-for="item in employeeOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+        项目：
+        <el-select v-model="searchParams.integralIds" multiple collapse-tags @change="search" size="mini">
+          <el-option v-for="item in integralOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
         获取时间：
         <el-date-picker v-model="integralTime" type="datetimerange" range-separator="-" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" size="mini"
           :start-placeholder="searchParams.integralStartTime" :end-placeholder="searchParams.integralEndTime" @change="integralSearchTimeChange" style="width: 320px">
@@ -28,30 +40,73 @@
 export default {
   data () {
     return {
-      tableColumns: [],
+      employeeOptions: [],
+      employeeStatusOptions: [],
+      integralOptions: [],
       integralTime: [],
       searchParams: {
         employeeIds: [],
-        employeeStatus: '',
+        employeeStatus: 'ENABLED',
         integralIds: [],
         integralEndTime: '',
-        integralStartTime: '',
-        orderBy: '',
-        pageNum: 1,
-        pageSize: 20
+        integralStartTime: ''
       },
-      tableData: [
-        {name: '黑仔达', lastIntegral: 10, 1: 4, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 1, reduceIntegral: 10, integral: 4},
-        {name: '超桑', lastIntegral: 20, 1: 0, 2: 3, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, reduceIntegral: 0, integral: 23}
-      ]
+      tableColumns: [],
+      tableData: []
     }
   },
   methods: {
+    changeEmployeeStatusOption () {
+      this.employeeOptions = []
+      this.getEmployeeOptions()
+    },
     exportExcel () {},
+    getEmployeeOptions () {
+      var _this = this
+      this.getRequest('/employee', {status: _this.searchParams.employeeStatus}).then(resp => {
+        if (resp.data && resp.data.data) {
+          _this.employees = resp.data.data
+          _this.searchParams.employeeIds = []
+          for (let i = 0; i < _this.employees.length; i++) {
+            const item = _this.employees[i]
+            _this.employeeOptions.push({label: item.name, value: item.id})
+            _this.searchParams.employeeIds.push(item.id)
+          }
+        }
+      })
+    },
+    getEmployeeStatusOptions () {
+      var _this = this
+      this.getRequest('/enum/active').then(resp => {
+        if (resp.data && resp.data.data) {
+          _this.employeeStatusOptions = _this.employeeStatusOptions.concat(resp.data.data)
+          _this.employeeStatusOptions.push({label: '全部', value: ''})
+        }
+      })
+    },
+    getIntegralOptions () {
+      var _this = this
+      this.postRequest('/integral', {}).then(resp => {
+        if (resp.data && resp.data.data) {
+          _this.integrals = resp.data.data
+          for (let i = 0; i < _this.integrals.length; i++) {
+            const item = _this.integrals[i]
+            _this.integralOptions.push({label: item.label, value: item.id})
+            _this.searchParams.integralIds.push(item.id)
+          }
+        }
+      })
+    },
     getTableColumn () {
       var _this = this
-      this.getRequest('/integral').then(res => {
+      this.postRequest('/integral', _this.searchParams).then(res => {
         _this.tableColumns = res.data.data
+      })
+    },
+    getTableData () {
+      var _this = this
+      this.postRequest('/employee/integral/statistics', _this.searchParams).then(res => {
+        _this.tableData = res.data.data
       })
     },
     integralSearchTimeChange () {
@@ -64,10 +119,15 @@ export default {
         this.searchParams.integralEndTime = ''
       }
     },
-    load () {},
-    search () {}
+    search () {
+      this.getTableColumn()
+      this.getTableData()
+    }
   },
   mounted () {
+    this.getEmployeeOptions()
+    this.getEmployeeStatusOptions()
+    this.getIntegralOptions()
     this.getTableColumn()
   }
 }
