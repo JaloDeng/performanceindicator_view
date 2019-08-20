@@ -23,7 +23,7 @@
       </template>
       <br style="line-height: 40px;">
       <template>
-        <el-table :data="tableData" size="mini" border style="width: 100%;">
+        <el-table id="data_table" :data="tableData" size="mini" border style="width: 100%;">
           <el-table-column align="center" width="50" label="序号" type="index" fixed="left"></el-table-column>
           <el-table-column align="center" width="150" label="参与者" prop="name" fixed="left"></el-table-column>
           <el-table-column align="center" width="150" label="上期累计" prop="lastIntegral" fixed="left"></el-table-column>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import XLSX from 'xlsx'
+
 export default {
   data () {
     return {
@@ -60,7 +62,15 @@ export default {
       this.employeeOptions = []
       this.getEmployeeOptions()
     },
-    exportExcel () {},
+    exportExcel () {
+      const tableData = document.getElementById('data_table')
+      const workBook = XLSX.utils.table_to_book(tableData)
+      var fileName = '积分统计'
+      if (this.integralTime.length === 2) {
+        fileName = fileName + ' ' + this.searchParams.integralStartTime.slice(0, 10) + '至' + this.searchParams.integralEndTime.slice(0, 10)
+      }
+      XLSX.writeFile(workBook, fileName + '.xlsx')
+    },
     getEmployeeOptions () {
       var _this = this
       this.getRequest('/employee', {status: _this.searchParams.employeeStatus}).then(resp => {
