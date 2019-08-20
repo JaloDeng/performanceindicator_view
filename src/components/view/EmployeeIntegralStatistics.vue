@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-main>
+    <el-main style="padding: 0px;">
       <template>
         参与者状态：
         <el-select v-model="searchParams.employeeStatus" @change="changeEmployeeStatusOption" size="mini" style="width: 100px;">
