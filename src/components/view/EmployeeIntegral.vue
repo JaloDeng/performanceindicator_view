@@ -149,7 +149,7 @@ export default {
       }
     },
     exportExcel () {
-      this.exportExcelRequest('/employee/integral/export/excel', this.searchParams, '积分统计')
+      this.exportExcelRequest('/employee/integral/export/excel', this.searchParams, '参与者积分列表')
     },
     getEmployeeOptions () {
       var _this = this
