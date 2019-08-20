@@ -23,13 +23,21 @@
       </template>
       <br style="line-height: 40px;">
       <template>
-        <el-table id="data_table" :data="tableData" size="mini" border style="width: 100%;">
+        <el-table :data="tableData" size="mini" border style="width: 100%;">
           <el-table-column align="center" width="50" label="序号" type="index" fixed="left"></el-table-column>
           <el-table-column align="center" width="150" label="参与者" prop="name" fixed="left"></el-table-column>
           <el-table-column align="center" width="150" label="上期累计" prop="lastIntegral" fixed="left"></el-table-column>
           <el-table-column v-for="item in tableColumns" width="150" align="center" :key="item.id" :property="item.columnName" :label="item.label"></el-table-column>
           <el-table-column align="center" width="150" label="减分" prop="reduceIntegral"></el-table-column>
           <el-table-column align="center" width="200" label="累计分数" prop="integral" fixed="right"></el-table-column>
+        </el-table>
+        <el-table id="data_table" :data="tableData" size="mini" border style="width: 100%;" hidden>
+          <el-table-column align="center" width="50" label="序号" type="index"></el-table-column>
+          <el-table-column align="center" width="150" label="参与者" prop="name"></el-table-column>
+          <el-table-column align="center" width="150" label="上期累计" prop="lastIntegral"></el-table-column>
+          <el-table-column v-for="item in tableColumns" width="150" align="center" :key="item.id" :property="item.columnName" :label="item.label"></el-table-column>
+          <el-table-column align="center" width="150" label="减分" prop="reduceIntegral"></el-table-column>
+          <el-table-column align="center" width="200" label="累计分数" prop="integral"></el-table-column>
         </el-table>
       </template>
     </el-main>
